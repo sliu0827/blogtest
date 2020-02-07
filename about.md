@@ -3,11 +3,13 @@ layout: page
 title: 关于我 
 ---
 
-一个 iOS SDK 开发者，喜欢研究一些新技术。
+我是一个即将毕业走向职场的准ICer。
 <p>
 平时喜欢整理个人博客，逛逛技术论坛。
 <p>
-了解一些 前端 基本概念和 Python 的简单用法。
+了解一些 数字IC 基本概念和 存储器设计技术 的基本设计理论。
+<p>
+也欢迎你关注我的微信公众号：ICerAShuang
 
 <p>
 
@@ -15,13 +17,7 @@ title: 关于我
 
 <p>
 
-是的，这个博客是我们大家的，目前已经有很大一部分人在使用我的博客模板了，我也很高兴大家使用我的模板。
-
-<p>
-
-如果你想搭建一个跟我一样的博客，可以看我的 
-<a href="/2016/10/jekyll_tutorials1/"> Jekyll 搭建个人博客 </a>
-教程
+在这里，畅所欲言，我们一起进步！
 
 <p>
 
@@ -29,7 +25,7 @@ title: 关于我
 
 <p> 
 
-博客源码在 <a target="_blank" href='https://github.com/leopardpan/leopardpan.github.io/'>Github</a> 上，你的 Star 是我更新的动力，谢谢~
+博客源码在 <a target="_blank" href='https://github.com/sliu0827/sliu0827.github.io'>Github</a> 上，你的 Star 是我更新的动力，谢谢~
 
 <p> 
 
@@ -41,11 +37,11 @@ title: 关于我
 <h3> 如何联系我 </h3>  
 
 <p> 
-email：leoparpan@icloud.com       
+email：liushuanglenovo2015@hotmail.com      
 <p> 
-qq: 1499065178     
+qq: 1324482739     
 <p> 
-如果有 搭建博客 或者 移动端 技术的问题可以一起讨论.
+如果有 数字IC技术 或 其他学习问题 可以一起讨论.
 <p> 
 
 

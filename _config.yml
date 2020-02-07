@@ -1,11 +1,11 @@
 # Basic
-title: 潘柏信
-subtitle: 个人站
+title: A Shuang
+subtitle: 博客站
 description: 欢迎来到我的个人站~
 # 头像里面的标题
 avatarTitle: leopardpan
 # 头像里面的描述
-avatarDesc: iOS / 机器学习
+avatarDesc: 数字IC / 集成电路设计
 url: "http://baixin.io"
 
 # Comment
@@ -16,13 +16,13 @@ comment:
 
 # Social
 social:
-    weibo: 5366874726 
-    github: leopardpan
+    weibo: 飞蛾扑火心不在焉 
+    github: sliu0827
     # zhihu: panpanleopard
     # juejin: xxx
-    jianshu: 2ada30d8d0f7
+    # jianshu: 2ada30d8d0f7
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: liushuanglenovo2015@hotmail.com
 
 
 # 百度统计 
