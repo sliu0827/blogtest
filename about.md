@@ -17,7 +17,7 @@ title: 关于我
 
 <p>
 
-在这里，畅所欲言，我们一起进步！
+在这里，请畅所欲言，我们一起进步！
 
 <p>
 
@@ -37,9 +37,9 @@ title: 关于我
 <h3> 如何联系我 </h3>  
 
 <p> 
-email：liushuanglenovo2015@hotmail.com      
+   QQ: 1324482739 
 <p> 
-qq: 1324482739     
+Email：liushuanglenovo2015@hotmail.com         
 <p> 
 如果有 数字IC技术 或 其他学习问题 可以一起讨论.
 <p> 
