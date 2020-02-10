@@ -1,117 +1,122 @@
+---
 layout: post
 title: Verilog HDL 基础
 date: 2020-02-09
+
 tags: RTL
 ---  
 
-一、Verilog HDL 语言的特点：
+# 一、Verilog HDL 语言的特点：
 
-互连（connectivity）：网络数据类型表示结构实体（例如门）之间的物理连接，不能存储值，由驱动器（例如门或连续赋值语句，assign）驱动。常见类型包括wire型和tri型。
+**互连（connectivity）**：网络数据类型表示结构实体（例如门）之间的物理连接，不能存储值，由驱动器（例如门或连续赋值语句，assign）驱动。常见类型包括wire型和tri型。
 
-并发（concurrency）：可以有效地描述并行的硬件系统 
+**并发**（concurrency）：可以有效地描述并行的硬件系统 
 
-时间（time）：定义了绝对和相对的时间度量，可综合操作符具有物理延迟
+**时间**（time）：定义了绝对和相对的时间度量，可综合操作符具有物理延迟
 
+**可综合**：always、if-else、case、assgin
 
-可综合：always、if-else、case、assgin
+**不可综合**：function、for、fork-join、while
 
-不可综合：function、for、fork-join、while
+# 二、常见可综合语法与硬件电路的关系
 
-## 二、常见可综合语法与硬件电路的关系
-
-### 1. if-else相关语句的硬件结构映射及优化
+## 1. if-else相关语句的硬件结构映射及优化
 
 对应的硬件结构是多路选择器（Multiplexing Hardware）
 
-#### 1.1 需要根据输入约束，小心设计：先“加”后“选”，先“选”后“加”
+- 需要根据输入约束，小心设计：先“加”后“选”，先“选”后“加”
 
-![01  Мад  S  0utData  0utData  01  Af1aq ](D:\github\sliu0827.github.io\images\blog\RTL\0.Verilog HDL基础\clip_image001.png)
+![img](https://sliu0827.github.io/images/blog/RTL/0.Verilog HDL基础/clip_image001.png)
 
-#### 1.2 单if语句，无优先级的判断结构
+- 单if语句，无优先级的判断结构
 
-#### 1.3 多if语句，具有优先级的判断结构
+- 多if语句，具有优先级的判断结构
 
-最后一级选择信号具有最高优先权；
+    最后一级选择信号具有最高优先权；
+    具有优先级的多选择结构会消耗组合逻辑
 
-具有优先级的多选择结构会消耗组合逻辑
+![img](https://sliu0827.github.io/images/blog/RTL/0.Verilog HDL基础/clip_image002.png)
 
-![img](D:\github\sliu0827.github.io\images\blog\RTL\0.Verilog HDL基础\clip_image002.png)
-
-### 2. case相关语句的硬件结构映射及优化
+## 2. case相关语句的硬件结构映射及优化
 
 对应的硬件结构是无优先级的判断结构，与单if语句的区别在于各条件互斥，多用于指令译码电路
 
-### 3. 慎用latch
+## 3. 慎用latch
 
-#### 3.1 综合器很难解释latch，因此，除非特殊用途，一般避免引入latch。
+- 综合器很难解释latch，因此，除非特殊用途，一般避免引入latch。
 
-![Register (D:\github\sliu0827.github.io\images\blog\RTL\0.Verilog HDL基础\clip_image003.png) — Edge Triggered  always @(posedge Cll<)  q data;  Latch — Level Sensitive  always @(d  If (enable)  Y = data;  or enable) ](file:///C:/Users/LIUSHU~1.HYG/AppData/Local/Temp/msohtmlclip1/02/clip_image003.png)
-latch由电平触发，非同步控制。DFF由时钟边沿触发，同步控制。
+  ![img](https://sliu0827.github.io/images/blog/RTL/0.Verilog HDL基础/clip_image003.png)
+  latch由电平触发，非同步控制。DFF由时钟边沿触发，同步控制。
 
-在使能信号有效时，latch相当于通路，无效时latch保持输出数据的当前值。因此latch容易产生毛刺（glitch），DFF则不易产生毛刺。latch将静态时序分析变得极为复杂。
+- 在使能信号有效时，latch相当于通路，无效时latch保持输出数据的当前值。因此latch容易产生毛刺（glitch），DFF则不易产生毛刺。latch将静态时序分析变得极为复杂。
+   一般的设计规则是：在绝大多数设计中避免产生latch。latch最大的危害在于不能过滤毛刺，这对于下一级电路是极其危险的，所以只要能用DFF的地方，就不用latch。
 
-一般的设计规则是：在绝大多数设计中避免产生latch。latch最大的危害在于不能过滤毛刺，这对于下一级电路是极其危险的，所以只要能用DFF的地方，就不用latch。
+- 易引入latch的途径：使用不完备的条件判断语句
 
-易引入latch的途径：使用不完备的条件判断语句
+- 防止产生非目的性latch的措施： 
+  	使用完备的if…else语句
+    	为每个输入条件设计输出操作，为case语句设置default操作
+    	仔细检查综合器生成的报告，latch会以warning的形式报告
 
-防止产生非目的性latch的措施： 
-	使用完备的if…else语句
-	为每个输入条件设计输出操作，为case语句设置default操作
-	仔细检查综合器生成的报告，latch会以warning的形式报告
+- 综合器指令，full-case和parallel-case
 
-#### 3.2 综合器指令，full-case和parallel-case
+  Full-case：告诉综合器，当前case结构所列条件已完备
 
-Full-case：告诉综合器，当前case结构所列条件已完备
+  Parallel-case：告诉DC，所有条件互斥，且并行，无优先权
 
-Parallel-case：告诉DC，所有条件互斥，且并行，无优先权
-
-### 4.逻辑复制，均衡负载
+## 4.逻辑复制，均衡负载
 
 通过逻辑复制，降低关键信号的扇出，进而降低该信号的传播延迟，提高电路性能。
 
-![Sig_in  Reg_sig  REGI  REG2  REG3  REG4  Sig_in  REG5  REGn  Reg_sig2  REGI  REG2  REG3  REG4  REGn.'2  REGI  REG2  REG3  REG4  REGn/2 ](D:\github\sliu0827.github.io\images\blog\RTL\0.Verilog HDL基础\clip_image004.png)
+![img ](https://sliu0827.github.io/images/blog/RTL/0.Verilog HDL基础/clip_image004.png)
 
-### 5.资源共享，减小面积
+## 5.资源共享，减小面积
 
-![B  c  temp  SUMI  temp +  temp +  temp + ](D:\github\sliu0827.github.io\images\blog\RTL\0.Verilog HDL基础\clip_image005.png)
+![img ](https://sliu0827.github.io/images/blog/RTL/0.Verilog HDL基础/clip_image005.png)
 
 ### 6.资源顺序重排，降低传播延时
 
-![Z=A+B+C+D  Late A ](D:\github\sliu0827.github.io\images\blog\RTL\0.Verilog HDL基础\clip_image006.png)
+![img](https://sliu0827.github.io/images/blog/RTL/0.Verilog HDL基础/clip_image006.png)
 
-### 7.同步复位与异步复位
+## 7.同步复位与异步复位
 
-### 8.少用“：？”赋值语句
+## 8.少用“：？”赋值语句
 
 使用always用于逻辑运算，关于assign，仅用于信号连接，难以阅读，且多层嵌套后很难被综合其解释
 
-## 三、可综合风格
+# 三、可综合风格
 
-完整的always敏感信号列表
+## 1.完整的always敏感信号列表
 
-	所有的组合逻辑或锁存的always结构必须有敏感信号列表。这个敏感信号列表必须包含所有的输入信号
+所有的组合逻辑或锁存的always结构必须有敏感信号列表。这个敏感信号列表必须包含所有的输入信号
 
-原因：综合过程将产生一个取决于除开敏感信号列表中所有其他值的结构，将可能在行为仿真和门级仿真间产生潜在的适配。
+*原因：综合过程将产生一个取决于除开敏感信号列表中所有其他值的结构，将可能在行为仿真和门级仿真间产生潜在的适配。*
 
- 
+## 2.每个always敏感信号列表对应一个时钟
 
-每个always敏感信号列表对应一个时钟
+在综合过程中，每个Verilog always敏感信号列表只能对应一个时钟。
 
-	在综合过程中，每个Verilog always敏感信号列表只能对应一个时钟。
+*原因：这是将每一个过程限制在单一寄存器类型的要求。*
 
-原因：这是将每一个过程限制在单一寄存器类型的要求。
+## 3.在时序电路中必须使用非阻塞赋值（<=），组合逻辑电路必须使用阻塞赋值（=）。
+
+# 四、模块划分
+
+## 1.分开异步逻辑与同步逻辑
+
+建议分开异步逻辑与同步逻辑
+
+*原因：避免综合时的问题，简化约束和编码难度。*
+
+## 2.分开控制逻辑和存储器
+
+建议控制逻辑和存储器逻辑分成独立的模块
+
+*原因：便于高层的存储器模块的使用和便于重新描述为不同的存储器类型。*
 
 
-在时序电路中必须使用非阻塞赋值（<=），组合逻辑电路必须使用阻塞赋值（=）。
 
-## 四、模块划分
+[1]: https://www.icourse163.org/course/SWJTU-1207492806?tid=1207824209	"《芯动力--硬件加速设计方法》"
 
-分开异步逻辑与同步逻辑
-	建议分开异步逻辑与同步逻辑
 
-原因：避免综合时的问题，简化约束和编码难度。
 
-分开控制逻辑和存储器
-	建议控制逻辑和存储器逻辑分成独立的模块
-
-原因：便于高层的存储器模块的使用和便于重新描述为不同的存储器类型。
