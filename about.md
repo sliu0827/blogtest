@@ -7,16 +7,24 @@ title: 关于我
 
 平时喜欢整理个人博客，逛逛技术论坛。
 
-了解一些 数字IC 基本概念和 存储器设计技术 的基本设计理论。
+了解一些 **数字IC** 基本概念和 **存储器设计技术** 的基本设计理论。
 
 也欢迎你关注我的微信公众号：ICerAShuang
 
-<p>
-<div align=left><img src="https://sliu0827.github.io/images/ICerAShuang.png" alt="img" style="zoom: 20%;" /></div>
-</p>
+<img src="https://sliu0827.github.io/images/ICerAShuang.png" div align=left alt="img" style="zoom:20%;" />	
+
+​	
+
+​	
+
+​		
+
+​	
+
 
 
 ### 我们的博客 
+
 ------
 
 
@@ -42,8 +50,9 @@ title: 关于我
 <p> 
 Email：liushuanglenovo2015@hotmail.com         
 <p> 
-如果有 数字IC技术 或 其他学习问题 可以一起讨论.
+如果有 数字IC技术 或 其他学习问题 可以一起讨论~
 <p> 
+
 
 
 {% include comments.html %}
