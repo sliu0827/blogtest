@@ -1,0 +1,173 @@
+I"T<h1 id="gnu-sed实例教程">GNU sed实例教程</h1>
+
+<blockquote>
+  <p>sed (stream editor) is a non-interactive command-line text editor.</p>
+</blockquote>
+
+<p>官方的定义是非交互地命令行文本编辑器。而我觉得描述成“行内文本插入、删除、替换的小工具“更容易理解。</p>
+
+<p>说到”行内“，即以一行文本为单位进行处理。sed的工作模式如下图，读入一行文本到内部的buffer，执行处理文本命令，输出到屏幕。然后读入下一行文本，进行下一轮处理。</p>
+
+<h2 id="sed使用方法">sed使用方法</h2>
+
+<p>sed使用格式：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -option 'cmd' file
+</code></pre></div></div>
+
+<p>其中，-option是sed的一些选项，’cmd’是处理文本的命令，如插入、删掉、替换等，file是待处理的文件。</p>
+
+<p>cmd一般用单引号括起来，格式如下：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'[line num]X[options]'
+</code></pre></div></div>
+
+<ul>
+  <li>line num是指定待处理的单行或几行。如果不指定行号，即为所有行。</li>
+  <li>X是执行的命令，如a（append）、d（delete）、i（insert）、s（search and replace）等。</li>
+  <li>options是指某些命令后可以带额外的参数。</li>
+</ul>
+
+<h2 id="sed基本用法示例">sed基本用法示例</h2>
+
+<h6 id="示例一">示例一：</h6>
+
+<p>第一行插入日期</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed '1i //2019-2-13' rtl.v
+</code></pre></div></div>
+
+<h6 id="示例二">示例二：</h6>
+
+<p>删除`timescale 1ns/100ps行</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed '/\x60timescale/d'
+</code></pre></div></div>
+
+<p>注：</p>
+<ol>
+  <li>`用ASCII码0x60转义。</li>
+  <li>/xxx/是用正则的方式来指定要处理哪些行，也可以理解成包含xxx的行。</li>
+</ol>
+
+<h6 id="示例三">示例三：</h6>
+
+<p>endmodule后面加// xxx</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed '/endmodule/a // xxx' rtl.v
+</code></pre></div></div>
+
+<h6 id="示例四">示例四：</h6>
+
+<p>把output wire修改成output reg</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed '/output/s/wire/reg/' rtl.v
+</code></pre></div></div>
+
+<h6 id="示例五">示例五：</h6>
+
+<p>看看analog verilog model文件中有哪些module</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -n '/^module/p' ana_v.v
+</code></pre></div></div>
+
+<p>注：</p>
+<ol>
+  <li>-n是取消默认的打印，即仅打印匹配的行。</li>
+  <li>p是打印命令。</li>
+</ol>
+
+<h6 id="示例六">示例六：</h6>
+
+<p>把逗号分隔的端口或者变量分成多行书写</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed 's/,/,\n/g' rtl.v
+</code></pre></div></div>
+
+<p>注：</p>
+<ol>
+  <li>\n是回车符，用来换行</li>
+  <li>g是指行内替换多次，如果不加g则替换一次。</li>
+</ol>
+
+<h6 id="示例七">示例七：</h6>
+
+<p>统计rtl的行数</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -n '$=' rtl.v
+</code></pre></div></div>
+
+<h6 id="示例八">示例八：</h6>
+
+<p>把//aa的下一行中的assign加上延时</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed '/\/\/aa/{n;s/assign/assign #1/}' rtl.v
+</code></pre></div></div>
+
+<p>注：</p>
+<ol>
+  <li>n是跳转到下一行，再执行后面的命令。</li>
+</ol>
+
+<h2 id="sed高级用法示例">sed高级用法示例</h2>
+
+<p>sed内部有两个存储空间，模式空间（pattern space）和保持空间（hold space）。模式空间就是上面提到的“行buffer”，而保持空间可以理解为另一个buffer，可以暂存任何临时数据。你可以想像成CPU的两个寄存器，通过类似汇编的指令来操作。</p>
+
+<ul>
+  <li>g 将hold space中的内容拷贝到pattern space中</li>
+  <li>G 将hold space中的内容追加到pattern space中</li>
+  <li>h 将pattern space中的内容拷贝到hold space中</li>
+  <li>H 将pattern space中的内容追加到hold space中</li>
+  <li>d 删除multiline pattern中的所有行，并读入下一新行到pattern中</li>
+  <li>D 删除multiline pattern中的第一行</li>
+  <li>x 交换保持空间和模式空间的内容</li>
+</ul>
+
+<h6 id="示例九">示例九：</h6>
+
+<p>删除rtl中的多行注释/* … */</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat -n script
+
+     1	/\/\*/!{p;d}
+     2	:a
+     3	/\*\//!{N;ba}
+     4	s/\/\*.*\*\///
+     5	p
+
+sed -nf script rtl.v
+</code></pre></div></div>
+
+<p>注：</p>
+<ol>
+  <li>第1行，当没有遇到/*的行时，先输出，然后d忽略掉下方的其它sed命令，退出本次处理。只有遇到/*才开执行后续的命令。</li>
+  <li>第2行，:a设置标签</li>
+  <li>第3行，如果没有遇到*/，就把内容追加到pattern space</li>
+  <li>第4行，遇到*/后，执行查找替换，把/* … */删除</li>
+  <li>第5行，输出删除注释后的rtl</li>
+  <li>由于sed正则没有非贪婪模式，不然就可以直接全部读到pattern space再用正则。</li>
+  <li>-f选项是指sed命令写在脚本里，好处是不需要考虑shell的转义，写多个命令时比较方便。</li>
+</ol>
+
+<h6 id="示例十">示例十：</h6>
+
+<p>交换rtl中的相邻两行</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -n '{h;n;G;p}' rtl.v
+</code></pre></div></div>
+
+<p>注：</p>
+<ol>
+  <li>h把第一行存入hold space</li>
+  <li>n读入第二行到pattern space（覆盖掉第一行）</li>
+  <li>G把hold space中的内容追加到pattern space</li>
+  <li>p输出</li>
+</ol>
+
+<blockquote>
+  <p>《GNU sed, a stream editor 》  version 4.5, 30 March 2018  by Ken Pizzini, Paolo Bonzini  （P85）</p>
+</blockquote>
+
+<blockquote>
+  <p>本文转载自:<a href="http://exasic.com" title="ExASIC">ExASIC</a></p>
+</blockquote>
+
+:ET

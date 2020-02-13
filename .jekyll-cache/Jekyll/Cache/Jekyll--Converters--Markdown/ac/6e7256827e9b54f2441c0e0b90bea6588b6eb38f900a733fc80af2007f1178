@@ -1,47 +1,30 @@
----
-layout: post
-title: SRAM 基础
-date: 2020-02-12
+I"�<p><strong>“</strong> 介绍SRAM基本存储单元，也分析了其设计和读写过程。<strong>”</strong></p>
 
-tags: Memory
----  
+<p><em>01.最常见的SRAM cell，the full CMOS 6T 类型；</em></p>
 
+<p><em>02.SRAM的读写过程；</em></p>
 
+<p><em>03.执行读操作时最基本的电学稳定**特性，静态噪声裕量(SNM)</em></p>
 
-**“** 介绍SRAM基本存储单元，也分析了其设计和读写过程。**”**
+<h3 id="01-sram-cell">01 SRAM CELL</h3>
 
-*01.最常见的SRAM cell，the full CMOS 6T 类型；*
+<hr />
 
-*02.SRAM的读写过程；*
+<p>SRAM cell由一个基本的触发器（flip-flop）单元构成，即<strong>两个交叉耦合（cross coupled）的反相器</strong>，于flip-flop的存储结点存储逻辑值“0”或“1”。</p>
 
-*03.执行读操作时最基本的电学稳定**特性，静态噪声裕量(SNM)*
+<p>最常用的SRAM cell是全部由MOS管构成的6个晶体管构成的互补逻辑电路（full CMOS 6-transistor），就SOC（system-on-chip）设计而言，由于full CMOS 6-T使用的工艺为平面CMOS工艺，便于生成制造，故最常使用。</p>
 
-### 01 SRAM CELL
+<p>主要组成：</p>
 
-------
+<p><strong>两个反相器(load MOSFET(LD0)-driver MOSFET(DR0), LD1-DR)；</strong></p>
 
+<p><strong>两个导通管(access MOSFET AC0, AC1)连接到一对bit line(BT,BB)上，同时，导通管的栅端(gate)连接到word line(WL)；</strong></p>
 
+<p>为构成一个flip-flop，<strong>其中一个反相器的输入和输出端需要分别连接到另一个反相器的输出和输入端，也即是交叉耦合</strong>。</p>
 
-SRAM cell由一个基本的触发器（flip-flop）单元构成，即**两个交叉耦合（cross coupled）的反相器**，于flip-flop的存储结点存储逻辑值“0”或“1”。
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/fig2.1.png" alt="fig2.1" /></p>
 
-
-
-最常用的SRAM cell是全部由MOS管构成的6个晶体管构成的互补逻辑电路（full CMOS 6-transistor），就SOC（system-on-chip）设计而言，由于full CMOS 6-T使用的工艺为平面CMOS工艺，便于生成制造，故最常使用。
-
-
-
-主要组成：
-**两个反相器(load MOSFET(LD0)-driver MOSFET(DR0), LD1-DR)；**
-
-**两个导通管(access MOSFET AC0, AC1)连接到一对bit line(BT,BB)上，同时，导通管的栅端(gate)连接到word line(WL)；**
-
-为构成一个flip-flop，**其中一个反相器的输入和输出端需要分别连接到另一个反相器的输出和输入端，也即是交叉耦合**。
-
-
-![fig2.1](https://sliu0827.github.io/images/blog/doc/Memory/fig2.1.png)
-
-<center>Fig. 2.1 SRAM cell with the full CMOS 6-transistor (6-T)</center>
-
+<center>Fig. 2.1 SRAM cell with the full CMOS 6-transistor (6-T)
 
 
 ### 02 Basic Operation of SRAM Cell
@@ -55,8 +38,7 @@ Memory的基本排列构造（array structure）如下图2.2所示，整个memor
 
 ![fig2.2](https://sliu0827.github.io/images/blog/doc/Memory/fig2.2.png)
 
-<center>Fig. 2.2 Basic full CMOS cell array structure</center>
-
+<center>Fig. 2.2 Basic full CMOS cell array structure<center>
 
 
 
@@ -66,8 +48,7 @@ SRAM具体某一位cell的确定由横向和纵向上共同选中，横向上由
 
 ![fig2.3](https://sliu0827.github.io/images/blog/doc/Memory/fig2.3.png)
 
-<center>Fig. 2.3 Column control circuits consisting of precharge circuit, column multiplexer (mux),sense amplifier (SA), output FF, and write amplifier (WA)</center>
-
+<center>Fig. 2.3 Column control circuits consisting of precharge circuit, column multiplexer (mux),sense amplifier (SA), output FF, and write amplifier (WA)<center>
 
 
 
@@ -77,8 +58,7 @@ SRAM具体某一位cell的确定由横向和纵向上共同选中，横向上由
 
 ![fig2.4](https://sliu0827.github.io/images/blog/doc/Memory/fig2.4.png)
 
-<center>Fig. 2.4 Basic voltage waveform in read and write operation</center>
-
+<center>Fig. 2.4 Basic voltage waveform in read and write operation<center>
 
 
 
@@ -130,8 +110,7 @@ Bit line电压变化后，使存储节点（N1，N2）的电压翻转，从而�
 
 ![fig2.5](https://sliu0827.github.io/images/blog/doc/Memory/fig2.5.png)
 
-<center>Fig. 2.5 Connections of the word line and a pair of bit lines to estimate the SNM</center>
-
+<center>Fig. 2.5 Connections of the word line and a pair of bit lines to estimate the SNM<center>
 
 
 
@@ -151,9 +130,10 @@ Driver MOSFET的阈值电压（Vth）较低，会减小SNM。Driver MOS和access
 
 ![fig2.6](https://sliu0827.github.io/images/blog/doc/Memory/fig2.6.png)
 
-<center>Fig. 2.6 Butterfly curbs are shown at VDD 0.6V and 1.1V</center>
-
+<center>Fig. 2.6 Butterfly curbs are shown at VDD 0.6V and 1.1V<center>
 
 因为full CMOS 6-T memory 能在静态工作状态下保存数据，不需要额外的动态刷新。在读的时候，因为有电压相反的bit line信号配合输出给差分放大器，能在较短时间内获取数据。因此，SRAM在cache memory，mobile phone等等都都有应用，但SRAM cell 也需要在standby mode 下降低其保持数据所产生的功耗。
 
-[^Ref]: *Low power and reliable SRAM memory cell and array design[M]. Springer Science & Business Media, 2011.*
+[^Ref]: *Low power and reliable SRAM memory cell and array design[M]. Springer Science &amp; Business Media, 2011.*
+</center></center></center></center></center></center></center></center></center></center></center>
+:ET
