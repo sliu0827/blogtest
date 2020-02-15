@@ -1,4 +1,4 @@
-I" <h2 id="cmos反相器的性能动态特性">CMOS反相器的性能：动态特性</h2>
+I"*7<h2 id="cmos反相器的性能动态特性">CMOS反相器的性能：动态特性</h2>
 <hr />
 
 <p>CMOS反相器的传播延时取决于它分别通过PMOS和NMOS管充放电负载电容C<sub>L</sub>所需要的时间。使C<sub>L</sub>尽可能小是实现高性能CMOS电路的关键。</p>
@@ -16,8 +16,11 @@
 
 <h3 id="2传播延时一阶分析">2.传播延时：一阶分析</h3>
 
-<p>等效导通电阻R<sub>eq</sub>，反相器的总传播延时：t<sub>p</sub> = （t<sub>pHL</sub> + t<sub>pLH</sub>)/2，其中：
-t<sub>pHL</sub>= 0.69 R<sub>eqn</sub>C<sub>L</sub></p>
+<p>等效导通电阻R<sub>eq</sub>，反相器的总传播延时：t<sub>p</sub> = （t<sub>pHL</sub> + t<sub>pLH</sub>)/2，其中：</p>
+
+<p>​</p>
+
+<p>t<sub>pHL</sub>= 0.69 R<sub>eqn</sub>C<sub>L</sub></p>
 
 <p>​</p>
 
@@ -33,10 +36,7 @@ t<sub>pHL</sub>= 0.69 R<sub>eqn</sub>C<sub>L</sub></p>
     <p>增加晶体管的W/L比：可以减小等效电阻，是最有力和最有效的性能优化工具。</p>
 
     <font color="#dd0000">同时增加晶体管尺寸也会增加扩散电容，因而增加C<sub>L</sub>，当本征电容超过由连线和扇出行成的外部负载时，增加门的尺寸不再对减少延时有帮助。</font>
-    <p><br /></p>
-
     <font color="#dd0000">较宽的晶体管具有较大的栅电容，增加了驱动门的扇出系数，从而反过来影响它的速度。</font>
-    <p><br /></p>
   </li>
   <li>
     <p>提高VDD：牺牲功耗来换取性能</p>
@@ -61,7 +61,271 @@ t_p &= 0.69R_{eq}(C_{int}+C_{ext})=0.69R_{eq}C_{int}(1+C_{ext}/C_{int})\\
 &=  t_{p0} (1 + C_{ext}/SCi_{ref})
 \end{align*} %]]></script>
 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right left right left right left right left right left right left" rowspacing="3pt" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true">
+    <mtr>
+      <mtd>
+        <msub>
+          <mi>t</mi>
+          <mi>p</mi>
+        </msub>
+      </mtd>
+      <mtd>
+        <mi></mi>
+        <mo>=</mo>
+        <mn>0.69</mn>
+        <msub>
+          <mi>R</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>q</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>i</mi>
+            <mi>n</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>x</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0.69</mn>
+        <msub>
+          <mi>R</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>q</mi>
+          </mrow>
+        </msub>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>i</mi>
+            <mi>n</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo>+</mo>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>x</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>i</mi>
+            <mi>n</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd />
+      <mtd>
+        <mi></mi>
+        <mo>=</mo>
+        <msub>
+          <mi>t</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>p</mi>
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo>+</mo>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>x</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>i</mi>
+            <mi>n</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd />
+      <mtd>
+        <mi></mi>
+        <mo>=</mo>
+        <mn>0.69</mn>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>R</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>r</mi>
+            <mi>e</mi>
+            <mi>f</mi>
+          </mrow>
+        </msub>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mi>S</mi>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">(</mo>
+        <mi>S</mi>
+        <mi>C</mi>
+        <msub>
+          <mi>i</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>r</mi>
+            <mi>e</mi>
+            <mi>f</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo>+</mo>
+        <mi>C</mi>
+        <mi>e</mi>
+        <mi>x</mi>
+        <mi>t</mi>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mo stretchy="false">(</mo>
+        <mi>S</mi>
+        <mi>C</mi>
+        <mi>i</mi>
+        <mi>r</mi>
+        <mi>e</mi>
+        <mi>f</mi>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">)</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd />
+      <mtd>
+        <mi></mi>
+        <mo>=</mo>
+        <mn>0.69</mn>
+        <msub>
+          <mi>R</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>r</mi>
+            <mi>e</mi>
+            <mi>f</mi>
+          </mrow>
+        </msub>
+        <mi>C</mi>
+        <msub>
+          <mi>i</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>r</mi>
+            <mi>e</mi>
+            <mi>f</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo>+</mo>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>x</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mi>S</mi>
+        <mi>C</mi>
+        <msub>
+          <mi>i</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>r</mi>
+            <mi>e</mi>
+            <mi>f</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mtd>
+    </mtr>
+    <mtr>
+      <mtd />
+      <mtd>
+        <mi></mi>
+        <mo>=</mo>
+        <msub>
+          <mi>t</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>p</mi>
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo>+</mo>
+        <msub>
+          <mi>C</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>e</mi>
+            <mi>x</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mi>S</mi>
+        <mi>C</mi>
+        <msub>
+          <mi>i</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>r</mi>
+            <mi>e</mi>
+            <mi>f</mi>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
+
 <p>Leads two important conclusions:</p>
+
 <ul>
   <li>反相器的本征延时tp0与门的尺寸无关，而只取决于工艺及方相器的版图；</li>
   <li>使S无穷大将达到最大可能的性能改善，使延时减小到只有本征延时值。</li>
