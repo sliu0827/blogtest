@@ -1,16 +1,18 @@
-I"$<p>在SRAM中，读写操作是最基本的，为了保证读写功能可以正常实现，我们需要分开来分析测试读写操作的稳定性，本文便详细阐释了SRAM读写操作的电学稳定性。*</p>
+I"�<p><em>在SRAM中，读写操作是最基本的，为了保证读写功能可以正常实现，我们需要分开来分析测试读写操作的稳定性，本文便详细阐释了SRAM读写操作的电学稳定性。</em></p>
 
-<p><strong>01 Read and Write Operatioins</strong></p>
+<h3 id="01-read-and-write-operatioins"><strong>01 Read and Write Operatioins</strong></h3>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig1.png" alt="img" /></p>
+<hr />
 
-<p>Fig.1 SRAM memory cell</p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig1.png" alt="img" /></p>
+
+<center>Fig.1 SRAM memory cell</center>
 
 <p>图1为CMOS 6-T SRAM电路图，图2为其读写操作波形。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig2.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM-cell/fig2.png" alt="img" /></p>
 
-<p>Fig.2 Fundamental waveform of SRAM operation</p>
+<center>Fig.2 Fundamental waveform of SRAM operation</center>
 
 <p><strong>当写</strong><strong>入数据“0”(W“0”)</strong>时，word line(WL)被激活，bit line根据输入数据值被驱动到“H”和“L”状态。存储节点的电压发生翻转，输入数据写入到数据存储节点中。</p>
 
@@ -22,57 +24,59 @@
 
 <p>图3为SRAM memory保持数据情形，存储节点N0和N1，保持相反的状态，“H”和“L”。word line 为“L”。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig3.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig3.png" alt="img" /></p>
 
-<p>Fig.3 SRAM cell condition during data retention</p>
+<center>Fig.3 SRAM cell condition during data retention</center>
 
 <p>如下图4所示，Memory cell读过程中，右边的节点N1，状态为”H”，左边的节点状态为”L”。在读之前，bit lines被预充电到”H”状态。读的过程中，word lines变为”H”状态，存取管(access MOSs)导通打开。读cell电流Iread从access MOS到“L”-state的存储节点流动，对预充的bit line放电。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig4.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig4.png" alt="img" /></p>
 
-<p>Fig.4 Read operation of SRAM cell</p>
+<center>Fig.4 Read operation of SRAM cell</center>
 
 <p>图5a电压波形是SRAM cell在正常读数据的过程中，每个存储节点的电压变化。正常读数据时，存储节点的电压不会发生翻转。图5b为memory cell正常操作的butterfly cruves，用来评估静态噪声裕量(SNM)。两条线之间有两个密闭空隙（space），意味着SRAM读操作的SNM是足够的。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig5.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig5.png" alt="img" /></p>
 
-<p>Fig.5 Voltage waveforms and butterfly curves during normal read operation.</p>
+<center>Fig.5 Voltage waveforms and butterfly curves during normal read operation. </center>
 
-<p>(a) SRAM cell nodes during normal read operation. (b) Butterfly curves to estimate SNM</p>
+<center> (a) SRAM cell nodes during normal read operation. (b) Butterfly curves to estimate SNM</center>
 
 <p><strong>在读操作期间，由于access MOS和driver MOS之间的电阻分压</strong>，存储节点的“L”-state被提升。<strong>如果存储节点电压“L”-state的提升值超过了由driver MOS,DR1和loadMOS，LD1组成的反相器的逻辑中点电压，保持数据将翻转</strong><strong>，被破坏(6a)</strong>。这种情况就是memory cell读失败。图6b是memory cell读数据失败对应的butterfly curves，两条曲线之间只有一个空隙，SRAM能正常读的SNM是不够的。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig6.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig6.png" alt="img" /></p>
 
-<p>Fig.6 Voltage waveforms and butterfly curves during failure read operation.</p>
+<center>Fig.6 Voltage waveforms and butterfly curves during failure read operation. </center>
 
-<p>(a) SRAM cell nodes during failureread operation. (b) Butterfly curves to estimate SNM</p>
+<center>  (a) SRAM cell nodes during failureread operation. (b) Butterfly curves to estimate SNM</center>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig7.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig7.png" alt="img" /></p>
 
-<p>Fig.7 Write operation of SRAM cell</p>
+<center>Fig.7 Write operation of SRAM cell</center>
 
 <p>关于写操作，如图7，在写之前，左边存储节点N0是“H” state，右边存储节点N1是“L” state。当要写的数据到达bit lines时，“H” state存储节点经过access MOS放电，写操作cell电流Iwrite,在图中用实线箭头标出。当“H”电位节点被放电至“L”电位时，节点的电压此时发生翻转，写操作完成(图8)。</p>
 
 <p><strong>在写的过程中，load MOS通过上拉电流Ipullup充电</strong>，如图3.7中虚线箭头所示。因此，<strong>如果load MOS充电的电流比access MOS放电电流大的话，存储节点“H”电位不会放电，节点电压不发生翻转，写操作失败(图9)</strong>。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig8.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig8.png" alt="img" /></p>
 
-<p>Fig.8 SRAM cell nodes during normal write operation</p>
+<center>Fig.8 SRAM cell nodes during normal write operation</center>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig9.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig9.png" alt="img" /></p>
 
-<p>Fig.9 SRAM cell nodes during failure write operation</p>
+<center>Fig.9 SRAM cell nodes during failure write operation</center>
 
-<p><strong>02 Sum</strong></p>
+<h3 id="02-sum"><strong>02 Sum</strong></h3>
+
+<hr />
 
 <p><strong>在SRAM cell 中，加强读操作和写操作稳定性的设计方法是一个矛盾的关系</strong>。例如，在表1中促使读操作和写操作更稳定的方法。所以，<strong>很难同时提高读和写操作的稳定性</strong>。在所有的130nm之前的传统制造工艺中，在SRAM cell中有更大的电压工作空间，可以同时保证稳定性，不会出问题。在更近的制造工艺中，随着MOSFETs中Vth变化(variation)，电压工作空间(operation margin)减小，SRAM cell中MOSFET电流随着Vth变化而波动(fluctuated)。</p>
 
 <p>除此之外，Vth variations会破坏在读和写操作期间MOSFET电流的平衡。因此，在SRAM cell设计阶段，最大化SRAM cell的operatingmargin，包括读和写的margin是必不可少的。Vth是MOSFET的一个很好的参数表征，它几乎完全可以指示晶体管的性能。</p>
 
-<p>Table.1 Drivability change to enhancestability of each operation</p>
+<center>Table.1 Drivability change to enhancestability of each operation</center>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM cell/fig10.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig10.png" alt="img" /></p>
 
 <p>为了实现最大化的operating-margins，需要更准确的SRAM operating margins，在本书第3章中，对于受MOSFET Vth variation而影响的SRAM operating margins分析做了进一步描述，这里不再细说。</p>
 
