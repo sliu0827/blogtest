@@ -1,4 +1,4 @@
-I"�<p><strong>“</strong> 介绍SRAM基本存储单元，也分析了其设计和读写过程。<strong>”</strong></p>
+I"�<p><strong>“</strong> 介绍SRAM基本存储单元，也分析了其设计和读写过程。<strong>”</strong></p>
 
 <p><em>01.最常见的SRAM cell，the full CMOS 6T 类型；</em></p>
 
@@ -19,7 +19,6 @@
 <p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.1.png" alt="fig2.1" /></p>
 
 <center>Fig. 2.1 SRAM cell with the full CMOS 6-transistor (6-T)</center>
-
 <p><strong>两个反相器(load MOSFET(LD0)-driver MOSFET(DR0), LD1-DR)；</strong></p>
 
 <p><strong>两个导通管(access MOSFET AC0, AC1)连接到一对bit line(BT,BB)上，同时，导通管的栅端(gate)连接到word line(WL)；</strong></p>
@@ -32,19 +31,19 @@
 
 <p>Memory的基本排列构造（array structure）如下图2.2所示，整个memory由nxm位memory cell组成。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础fig2.2.png" alt="fig2.2" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.2.png" alt="fig2.2" /></p>
 
 <center>Fig. 2.2 Basic full CMOS cell array structure</center>
 
 <p>SRAM具体某一位cell的确定由横向和纵向上共同选中，横向上由<strong>word line译码器（word decoder）</strong>根据地址数据选择一排word line(WL),纵向上bit line控制电路由<strong>预充电电路（precharge circuit），列选择器（Column multiplexer，MUX），灵敏放大器（sense amplifier ，SA)，输出电路（output FF）和写放大器（write amplifier，SA）</strong>构成。详细的电路结构在图2.3中。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础fig2.3.png" alt="fig2.3" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.3.png" alt="fig2.3" /></p>
 
 <center>Fig. 2.3 Column control circuits consisting of precharge circuit, column multiplexer (mux),sense amplifier (SA), output FF, and write amplifier (WA)</center>
 
 <p>下面介绍SRAM读写操作，如图2.4所示电压波形。<strong>执行读操作需要给bit line先进行预充电（precharge），prechage电路平衡提升bit line的电位至VDD。</strong><strong>随后，word line置高，导通管打开，预先存储于存储节点的数据使cell产生一个小的电压变化（ΔVS）</strong>。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础fig2.4.png" alt="fig2.4" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.4.png" alt="fig2.4" /></p>
 
 <center>Fig. 2.4 Basic voltage waveform in read and write operation</center>
 
@@ -73,7 +72,7 @@
 
 <p>3.在曲线A和曲线B（或曲线C和D）中画出最大正方形。方形中较小那个的对角线就是SNM。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础fig2.5.png" alt="fig2.5" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.5.png" alt="fig2.5" /></p>
 
 <center>Fig. 2.5 Connections of the word line and a pair of bit lines to estimate the SNM</center>
 
@@ -83,7 +82,7 @@
 
 <p>Driver MOSFET的阈值电压（Vth）较低，会减小SNM。Driver MOS和access MOS的栅宽之比称作比例因子β。通过增加driver MOS的电流，减小access MOS的电流，从而限制了N0电压的上升值ΔVN ，<strong>因此β增大，SNM增大</strong>。一般情况下，SRAM cell中，比率β大于1.5。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础fig2.6.png" alt="fig2.6" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.6.png" alt="fig2.6" /></p>
 
 <center>Fig. 2.6 Butterfly curbs are shown at VDD 0.6V and 1.1V</center>
 

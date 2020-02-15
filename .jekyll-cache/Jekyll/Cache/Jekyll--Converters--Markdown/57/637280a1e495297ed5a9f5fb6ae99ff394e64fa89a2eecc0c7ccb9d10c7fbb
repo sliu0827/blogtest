@@ -1,4 +1,4 @@
-I"�<p><em>在SRAM中，读写操作是最基本的，为了保证读写功能可以正常实现，我们需要分开来分析测试读写操作的稳定性，本文便详细阐释了SRAM读写操作的电学稳定性。</em></p>
+I"�<p><em>在SRAM中，读写操作是最基本的，为了保证读写功能可以正常实现，我们需要分开来分析测试读写操作的稳定性，本文便详细阐释了SRAM读写操作的电学稳定性。</em></p>
 
 <h3 id="01-read-and-write-operatioins"><strong>01 Read and Write Operatioins</strong></h3>
 
@@ -39,7 +39,6 @@
 <p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig5.png" alt="img" /></p>
 
 <center>Fig.5 Voltage waveforms and butterfly curves during normal read operation. </center>
-
 <center> (a) SRAM cell nodes during normal read operation. (b) Butterfly curves to estimate SNM</center>
 
 <p><strong>在读操作期间，由于access MOS和driver MOS之间的电阻分压</strong>，存储节点的“L”-state被提升。<strong>如果存储节点电压“L”-state的提升值超过了由driver MOS,DR1和loadMOS，LD1组成的反相器的逻辑中点电压，保持数据将翻转</strong><strong>，被破坏(6a)</strong>。这种情况就是memory cell读失败。图6b是memory cell读数据失败对应的butterfly curves，两条曲线之间只有一个空隙，SRAM能正常读的SNM是不够的。</p>
@@ -47,7 +46,6 @@
 <p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig6.png" alt="img" /></p>
 
 <center>Fig.6 Voltage waveforms and butterfly curves during failure read operation. </center>
-
 <center>  (a) SRAM cell nodes during failureread operation. (b) Butterfly curves to estimate SNM</center>
 
 <p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig7.png" alt="img" /></p>
@@ -75,7 +73,6 @@
 <p>除此之外，Vth variations会破坏在读和写操作期间MOSFET电流的平衡。因此，在SRAM cell设计阶段，最大化SRAM cell的operatingmargin，包括读和写的margin是必不可少的。Vth是MOSFET的一个很好的参数表征，它几乎完全可以指示晶体管的性能。</p>
 
 <center>Table.1 Drivability change to enhancestability of each operation</center>
-
 <p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig10.png" alt="img" /></p>
 
 <p>为了实现最大化的operating-margins，需要更准确的SRAM operating margins，在本书第3章中，对于受MOSFET Vth variation而影响的SRAM operating margins分析做了进一步描述，这里不再细说。</p>
