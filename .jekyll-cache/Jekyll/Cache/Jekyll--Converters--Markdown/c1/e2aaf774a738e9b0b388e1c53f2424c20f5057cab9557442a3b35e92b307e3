@@ -1,4 +1,4 @@
-I" <h2 id="cmos反相器的性能动态特性">CMOS反相器的性能：动态特性</h2>
+I" <h2 id="cmos反相器的性能动态特性">CMOS反相器的性能：动态特性</h2>
 <hr />
 
 <p>CMOS反相器的传播延时取决于它分别通过PMOS和NMOS管充放电负载电容C<sub>L</sub>所需要的时间。使C<sub>L</sub>尽可能小是实现高性能CMOS电路的关键。</p>
@@ -17,8 +17,11 @@
 <h3 id="2传播延时一阶分析">2.传播延时：一阶分析</h3>
 
 <p>等效导通电阻R<sub>eq</sub>，反相器的总传播延时：t<sub>p</sub> = （t<sub>pHL</sub> + t<sub>pLH</sub>)/2，其中：
-t<sub>pHL</sub>= 0.69 R<sub>eqn</sub>C<sub>L</sub>
-t<sub>pLH</sub>= 0.69 R<sub>eqp</sub>C<sub>L</sub></p>
+t<sub>pHL</sub>= 0.69 R<sub>eqn</sub>C<sub>L</sub></p>
+
+<p>​</p>
+
+<p>t<sub>pLH</sub>= 0.69 R<sub>eqp</sub>C<sub>L</sub></p>
 
 <p><strong>减小门传播延时：</strong></p>
 
@@ -49,8 +52,7 @@ t<sub>pLH</sub>= 0.69 R<sub>eqp</sub>C<sub>L</sub></p>
 
 <p>负载电容划分为：C<sub>L</sub> = C<sub>int</sub> + C<sub>ext</sub>，其中 C<sub>int</sub> 即本征输出电容， C<sub>ext</sub>是外部负载电容，来自扇出和导线电容。</p>
 
-<blockquote>
-  <script type="math/tex; mode=display">% <![CDATA[
+<script type="math/tex; mode=display">% <![CDATA[
 \begin{align*}
 t_p &= 0.69R_{eq}(C_{int}+C_{ext})=0.69R_{eq}C_{int}(1+C_{ext}/C_{int})\\
 &= t_{p0}(1 + C_{ext}/C_{int})\\
@@ -58,7 +60,6 @@ t_p &= 0.69R_{eq}(C_{int}+C_{ext})=0.69R_{eq}C_{int}(1+C_{ext}/C_{int})\\
 &=  0.69R_{ref}Ci_{ref}(1+C_{ext}/SCi_{ref})\\
 &=  t_{p0} (1 + C_{ext}/SCi_{ref})
 \end{align*} %]]></script>
-</blockquote>
 
 <p>Leads two important conclusions:</p>
 <ul>

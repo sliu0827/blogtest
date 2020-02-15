@@ -10,7 +10,7 @@
 
 <p>图1为CMOS 6-T SRAM电路图，图2为其读写操作波形。</p>
 
-<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM-cell/fig2.png" alt="img" /></p>
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/2.SRAM_cell/fig2.png" alt="img" /></p>
 
 <center>Fig.2 Fundamental waveform of SRAM operation</center>
 
