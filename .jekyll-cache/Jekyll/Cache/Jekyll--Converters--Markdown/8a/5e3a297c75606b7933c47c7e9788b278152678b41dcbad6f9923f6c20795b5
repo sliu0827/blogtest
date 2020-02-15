@@ -1,39 +1,22 @@
----
-layout: post
-title: SRAM 基础
-date: 2020-02-12
+I"�<p><strong>“</strong> 介绍SRAM基本存储单元，也分析了其设计和读写过程。<strong>”</strong></p>
 
-tags: Memory
----  
+<p><em>01.最常见的SRAM cell，the full CMOS 6T 类型；</em></p>
 
+<p><em>02.SRAM的读写过程；</em></p>
 
+<p><em>03.执行读操作时最基本的电学稳定**特性，静态噪声裕量(SNM)</em></p>
 
-**“** 介绍SRAM基本存储单元，也分析了其设计和读写过程。**”**
+<h3 id="01-sram-cell">01 SRAM CELL</h3>
 
-*01.最常见的SRAM cell，the full CMOS 6T 类型；*
+<hr />
 
-*02.SRAM的读写过程；*
+<p>SRAM cell由一个基本的触发器（flip-flop）单元构成，即<strong>两个交叉耦合（cross coupled）的反相器</strong>，于flip-flop的存储结点存储逻辑值“0”或“1”。</p>
 
-*03.执行读操作时最基本的电学稳定**特性，静态噪声裕量(SNM)*
+<p>最常用的SRAM cell是全部由MOS管构成的6个晶体管构成的互补逻辑电路（full CMOS 6-transistor），就SOC（system-on-chip）设计而言，由于full CMOS 6-T使用的工艺为平面CMOS工艺，便于生成制造，故最常使用。</p>
 
-### 01 SRAM CELL
+<p>主要组成：</p>
 
-------
-
-
-
-SRAM cell由一个基本的触发器（flip-flop）单元构成，即**两个交叉耦合（cross coupled）的反相器**，于flip-flop的存储结点存储逻辑值“0”或“1”。
-
-
-
-最常用的SRAM cell是全部由MOS管构成的6个晶体管构成的互补逻辑电路（full CMOS 6-transistor），就SOC（system-on-chip）设计而言，由于full CMOS 6-T使用的工艺为平面CMOS工艺，便于生成制造，故最常使用。
-
-
-
-主要组成：
-
-
-![fig2.1](https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.1.png)
+<p><img src="https://sliu0827.github.io/images/blog/doc/Memory/1.SRAM基础/fig2.1.png" alt="fig2.1" /></p>
 
 <center>Fig. 2.1 SRAM cell with the full CMOS 6-transistor (6-T)<center>
 
@@ -152,4 +135,6 @@ Driver MOSFET的阈值电压（Vth）较低，会减小SNM。Driver MOS和access
 
 因为full CMOS 6-T memory 能在静态工作状态下保存数据，不需要额外的动态刷新。在读的时候，因为有电压相反的bit line信号配合输出给差分放大器，能在较短时间内获取数据。因此，SRAM在cache memory，mobile phone等等都都有应用，但SRAM cell 也需要在standby mode 下降低其保持数据所产生的功耗。
 
-[^Ref]: *Low power and reliable SRAM memory cell and array design[M]. Springer Science & Business Media, 2011.*
+[^Ref]: *Low power and reliable SRAM memory cell and array design[M]. Springer Science &amp; Business Media, 2011.*
+</center></center></center></center></center></center></center></center></center></center></center></center>
+:ET
