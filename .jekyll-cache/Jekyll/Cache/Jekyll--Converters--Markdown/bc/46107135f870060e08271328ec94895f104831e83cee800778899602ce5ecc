@@ -1,0 +1,171 @@
+I"
+4<h3 id="示例1假设b信号的延迟较大到来较晚那么电路应如何修改">示例1：假设b信号的延迟较大，到来较晚，那么电路应如何修改？</h3>
+
+<p>分析代码可知，当满足条<code class="highlighter-rouge">sel[1]&amp;~(sel[2]|sel[3])</code>时，输出z=b。因此我们不可简单的移动<code class="highlighter-rouge">if(sel[1]) z=b;</code>语句的位置，否则会改变电路的功能。</p>
+
+<p>RTL代码：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig1.png" alt="img" /></p>
+
+<p>电路结构：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig2.png" alt="img" /></p>
+
+<p>我们做如下修改：</p>
+
+<div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">always</span> <span class="o">@</span><span class="err">（</span><span class="o">*</span><span class="err">）</span><span class="k">begin</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sel</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="n">z</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sel</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="n">z</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sel</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="n">z</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sel</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="p">(</span><span class="n">sel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">|</span> <span class="n">sel</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">b_is_late</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>修改后电路结构为：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig3.png" alt="img" /></p>
+
+<h3 id="示例2">示例2：</h3>
+
+<div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">single_if_late</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">CTRL_is_late_arriving</span><span class="p">,</span><span class="n">Z</span><span class="p">);</span>
+<span class="kt">input</span> <span class="p">[</span><span class="mi">6</span><span class="o">:</span><span class="mi">1</span><span class="p">]</span><span class="n">A</span><span class="p">;</span>
+<span class="kt">input</span> <span class="p">[</span><span class="mi">5</span><span class="o">:</span><span class="mi">1</span><span class="p">]</span><span class="n">C</span><span class="p">;</span>
+<span class="kt">input</span> <span class="n">CTRL_is_late_arriving</span><span class="p">;</span>
+    
+<span class="kt">output</span> <span class="n">Z</span><span class="p">;</span>
+
+<span class="kt">reg</span> <span class="n">Z</span><span class="p">;</span>
+<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="n">A</span> <span class="kt">or</span> <span class="n">C</span> <span class="kt">or</span> <span class="n">CTRL_is_late_arriving</span><span class="p">)</span><span class="k">begin</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span> <span class="o">&amp;&amp;</span> <span class="n">CTRL_is_late_arriving</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+    <span class="k">else</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<span class="k">end</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div>
+
+<p>修改后：</p>
+
+<pre><code class="language-Verilog">module single_if_improved(A,C,CTRL_is_late_arriving,Z);
+
+input [6:1]A;
+input [5:1]C;
+input CTRL_is_late_arriving;
+
+output Z;
+
+reg Z,Z1;
+wire Z2,prev_cond;
+always @(A or C) begin
+	if(C[1] == 1'b1)
+		Z1 = A[1];
+	else if(C[2] == 1'b0)
+		Z1 = A[2];
+	else if(C[3] == 1'b1)
+		z1 = A[3];
+	else if(C[5] == 1'b0)
+		Z1 = A[5];
+	else
+		Z1 = A[6];
+end
+
+assign Z2 = A[4];
+assign prev_cond = (C[1]==1'b1)||(C[2]==1'b0)||(C[3]==1'b1);
+
+always @(C or prev_cond or CTRL_is_late_arriving or Z1 or Z2) begin
+	if((C[4]==1'b1)&amp;&amp;(CTRL_is_late_arriving==1'b0))
+		if(prev_cond) Z = Z1;
+		else Z = Z2;
+	else
+		Z = Z1;
+end
+
+endmodule
+</code></pre>
+
+<p>电路结构：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig4.png" alt="img" /></p>
+
+<h3 id="示例3">示例3：</h3>
+
+<div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">case_in_if_01</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">DATA_is_late_arriving</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">sel</span><span class="p">,</span><span class="n">Z</span><span class="p">);</span>
+
+<span class="kt">input</span> <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">1</span><span class="p">]</span><span class="n">A</span><span class="p">;</span>
+<span class="kt">input</span> <span class="n">DATA_is_late_arriving</span><span class="p">;</span>
+<span class="kt">input</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="n">sel</span><span class="p">;</span>
+<span class="kt">input</span> <span class="p">[</span><span class="mi">5</span><span class="o">:</span><span class="mi">1</span><span class="p">]</span><span class="n">C</span><span class="p">;</span>
+
+<span class="n">ouput</span> <span class="n">Z</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">Z</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="n">sel</span> <span class="kt">or</span> <span class="n">C</span> <span class="kt">or</span> <span class="n">A</span> <span class="kt">or</span> <span class="n">DATA_is_late_arriving</span><span class="p">)</span><span class="k">begin</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+		<span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+		<span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+		<span class="k">case</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span>
+			<span class="mb">3'b010</span><span class="o">:</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+			<span class="mb">3'b011</span><span class="o">:</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">DATA_is_late_arriving</span><span class="p">;</span>
+			<span class="mb">3'b101</span><span class="o">:</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
+			<span class="mb">3'b110</span><span class="o">:</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+			<span class="nl">default:</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+		<span class="k">endcase</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+		<span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+	<span class="k">else</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div>
+
+<p>对应的电路结构：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig5.png" alt="img" /></p>
+
+<p>修改后：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig6.png" alt="img" /></p>
+
+<h3 id="示例4">示例4：</h3>
+
+<p>信号CONTROL到达时间较晚，如何修改能够提高电路性能？</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig7.png" alt="img" /></p>
+
+<p>作如下修改：</p>
+
+<p>过复制数据路径，将CONTROL信号放到最后，通过先加后选的方式，改善选择信号的延时。</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig8.png" alt="img" /></p>
+
+<p>调整后的代码：</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig9.png" alt="img" /></p>
+
+<h3 id="范例5假设a信号到来较晚如何修改能够提高电路性能">范例5：假设A信号到来较晚，如何修改能够提高电路性能？</h3>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig10.png" alt="fig10" /></p>
+
+<p>修改方法：</p>
+
+<p>通过调整A信号的计算顺序，是信号A路上减少了一个加法器。</p>
+
+<p><img src="https://sliu.0827.github.io/images/blog/RTL/1.RTL考虑延时/fig11.png" alt="fig11" /></p>
+
+:ET
